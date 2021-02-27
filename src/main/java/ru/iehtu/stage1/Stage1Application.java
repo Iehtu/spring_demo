@@ -1,8 +1,9 @@
 package ru.iehtu.stage1;
 
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 // @SpringBootApplication
@@ -12,24 +13,30 @@ public class Stage1Application {
 		
 		//Прямое управление. Всё сами, всё сами...
 		
+
+		System.out.println("Прямое управление");
+
 		Work work = new Work("Уборщик"); // Создали раз объект
 		Man worker = new Man(); // Создали два объект
 
 		worker.setName("Вася"); // Установили параметры объекта - имя
-		worker.setSalary(100); // И зарплату
+		worker.setSalary(200); // И зарплату
 
 		work.setWorker(worker); // Назначили человека на работу
-		System.out.println(work.getLoss()); // Посчитали наши затраты на работу
+		System.out.println(work.getInfoLos()); // Посчитали наши затраты на работу
 
 		
 		// Обратное управление. За нас всё сделает Framework
 
-		ApplicationContext context = new ClassPathXmlApplicationContext("main_cfg.xml");
+		System.out.println("Обратное управление");
+
+		ApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
 		Work work2 = (Work)context.getBean("work");
 		
-		System.out.println(work2.getLoss());
+		System.out.println(work2.getInfoLos());
 
-		((ClassPathXmlApplicationContext)context).close();
+		((AnnotationConfigApplicationContext) context).close();
+
 	}
 
 }
