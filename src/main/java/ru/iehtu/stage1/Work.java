@@ -38,7 +38,7 @@ public class Work {
     }
 
     public String getInfoLos(){
-        return "Рабочий " + worker.getName() + " заработал " + getLoss() + " руб.";
+        return "\nЗа " + getDescription() + " " + worker.getName() + " заработал " + getLoss() + " руб.\n";
     }
 
 }

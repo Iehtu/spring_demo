@@ -14,9 +14,9 @@ public class Stage1Application {
 		//Прямое управление. Всё сами, всё сами...
 		
 
-		System.out.println("Прямое управление");
+		System.out.println("\nПрямое управление\n");
 
-		Work work = new Work("Уборщик"); // Создали раз объект
+		Work work = new Work("уборщик"); // Создали раз объект
 		Man worker = new Man(); // Создали два объект
 
 		worker.setName("Вася"); // Установили параметры объекта - имя
@@ -28,14 +28,28 @@ public class Stage1Application {
 		
 		// Обратное управление. За нас всё сделает Framework
 
-		System.out.println("Обратное управление");
+		System.out.println("\nОбратное управление. Определим Бины через XML\n");
 
-		ApplicationContext context = new AnnotationConfigApplicationContext(Config.class);
-		Work work2 = (Work)context.getBean("work");
+		ApplicationContext xmlContext = new ClassPathXmlApplicationContext("main_cfg.xml");
+		Work work2 = xmlContext.getBean(Work.class);
 		
 		System.out.println(work2.getInfoLos());
 
-		((AnnotationConfigApplicationContext) context).close();
+		((ClassPathXmlApplicationContext) xmlContext).close();
+
+		System.out.println("\nОбратное управление. Определим Бины через Java\n");
+
+		ApplicationContext javaContext = new AnnotationConfigApplicationContext(Config.class);
+		Work work_java  = javaContext.getBean(Work.class);
+		System.out.println(work_java.getInfoLos());
+		((AnnotationConfigApplicationContext) javaContext).close();
+
+		System.out.println("\nОбратное управление. Определим Бины через Annotation\n");
+
+		ApplicationContext annotationContext = new AnnotationConfigApplicationContext(ConfigAnnotation.class);
+		Work work_annotation  = annotationContext.getBean(Work.class);
+		System.out.println(work_annotation.getInfoLos());
+		((AnnotationConfigApplicationContext) annotationContext).close();
 
 	}
 
